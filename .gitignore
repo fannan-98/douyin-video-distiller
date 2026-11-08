@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# 运行时产物（随 workdir 生成，不入库）
+status.json
+STATUS.md
+stage0.json
+pipeline-steps.json
+upload-manifest.json
+lint-note.json
+ima-receipt.json
+chapters.json
+chapters.md
+input_resolution.json
+_watch/
+api/
+
+# 凭证与会话（严禁入库）
+cookies.txt
+cookies.json
+session.json
+session_*.json
+.env
+*.env
+*secret*.json
+
+# 媒体与模型文件（体积大，且不属于源码）
+*.mp4
+*.mp3
+*.m4a
+*.wav
+*.srt
+*.vtt
+*.onnx
+tokens.txt
+
+# 本机 / 临时
+.DS_Store
+Thumbs.db
+*.log
