@@ -98,6 +98,22 @@ python tests/test_drift_detection.py
 - `scripts/dy_sign/` 与 `scripts/douyin_detail.py` 的签名实现取自上游开源项目，各自许可证与文件对应关系见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) 及 `references/douyin-download.md §7`。再分发请连同该 NOTICE 一起保留。
 - 内容涉及第三方平台接口的分析，仅用于个人学习与内容沉淀；请勿用于批量爬取、绕过登录墙或再发布他人受版权保护的内容。
 
+## 版本与维护
+
+本仓库是**公用版**，与作者本机自用的那份 Skill **有意分叉、独立维护**：
+
+| | 自用版 | 公用版（本仓库） |
+| --- | --- | --- |
+| 位置 | 作者本机 `~/.workbuddy/skills/douyin-video-distiller` | 本 GitHub 公开仓库 |
+| 个人标识 | 真实 ima 知识库 ID、本机绝对路径、个人排错笔记 | 全部脱敏为 `YOUR_*` 占位符 / 环境变量 |
+| 配置方式 | 写死在文档与常量里 | `scripts/dy_config.py` + `.env.example` + `doctor.py` 体检 |
+| 授权 | 不对外发布 | Apache-2.0 |
+| 用途 | 作者日常跑单 | 供他人 clone、改造、二次分发 |
+
+两版**不会自动同步**。自用版升级后，只有适合公开的改动才会被手动挑选、重新脱敏后提交到这里；反过来，本仓库的配置中心化改造也不会回灌到自用版。对比两份内容看到差异属正常现象。
+
+> 维护者注意：本仓库是公开的。同步改动时**不要**把自用版里的真实知识库 ID、文件夹 ID 或本机路径直接提交进来，先脱敏再 commit。
+
 ## 说明
 
 - `references/` 里保留了大量作者本机的排错记录（磁盘容量、代理行为、Edge profile 等），是**开发笔记**而非通用前提。
