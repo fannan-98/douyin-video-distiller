@@ -17,7 +17,7 @@ are reported but hard-marked `is_transcript=false` so nobody can launder a
 title into a verbatim source.
 
 Usage:
-    python probe_subtitles.py --workdir "D:/douyin-distill/<id>"
+    python probe_subtitles.py --workdir "$DOUYIN_DISTILL_ROOT/<id>"
 """
 
 from __future__ import annotations

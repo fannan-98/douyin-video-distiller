@@ -19,8 +19,8 @@ This script makes reuse an explicit, auditable stage:
      the single authoritative status.json.
 
 Usage:
-    python resolve_transcript.py --workdir "D:/douyin-distill/<id>/run2" \
-        [--source "D:/douyin-distill/<id>"] [--mp4 "<workdir>/api/<id>.mp4"]
+    python resolve_transcript.py --workdir "$DOUYIN_DISTILL_ROOT/<id>/run2" \
+        [--source "$DOUYIN_DISTILL_ROOT/<id>"] [--mp4 "<workdir>/api/<id>.mp4"]
 """
 
 from __future__ import annotations

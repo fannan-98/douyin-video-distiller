@@ -26,10 +26,10 @@ Metadata, cover images, chapters and download all keep using
 ``douyin_detail.py``, whose ``/aweme/detail/`` endpoint is still open to guests.
 
 Data (all on D:, nothing written to C:)
-    D:/douyin-distill/_watch/accounts.json   who to watch
-    D:/douyin-distill/_watch/seen.json       every aweme_id ever seen
-    D:/douyin-distill/_watch/queue.json      what is waiting / done
-    D:/douyin-distill/_watch/inbox.txt       manual drop box (one link per line)
+    <DOUYIN_WATCH_ROOT>/accounts.json   who to watch
+    <DOUYIN_WATCH_ROOT>/seen.json       every aweme_id ever seen
+    <DOUYIN_WATCH_ROOT>/queue.json      what is waiting / done
+    <DOUYIN_WATCH_ROOT>/inbox.txt       manual drop box (one link per line)
 
 Commands
 --------
@@ -51,7 +51,9 @@ import re
 from datetime import datetime
 from pathlib import Path
 
-WATCH_ROOT = Path("D:/douyin-distill/_watch")
+from dy_config import WATCH_ROOT
+
+# WATCH_ROOT comes from dy_config (DOUYIN_WATCH_ROOT).
 ACCOUNTS = WATCH_ROOT / "accounts.json"
 SEEN = WATCH_ROOT / "seen.json"
 QUEUE = WATCH_ROOT / "queue.json"

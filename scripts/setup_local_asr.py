@@ -4,7 +4,7 @@
 Why this exists
 ---------------
 v1.7 shipped the offline backend as something that already happened to exist on
-one machine (``D:\\WorkBuddy-ASR``).  Moving to another machine meant re-deriving
+one machine (``$WORKBUDDY_ASR_ROOT``).  Moving to another machine meant re-deriving
 a dozen shell incantations, and there was no way to tell a good install from a
 half-finished one.  This script makes the deployment reproducible and
 self-verifying.
@@ -44,7 +44,9 @@ import urllib.parse
 from datetime import datetime
 from pathlib import Path
 
-DEFAULT_ROOT = Path(os.environ.get("WORKBUDDY_ASR_ROOT", "D:/WorkBuddy-ASR"))
+from dy_config import ASR_ROOT
+
+DEFAULT_ROOT = ASR_ROOT
 ENGINE_PKG = "sherpa-onnx==2.0.1"
 NUMPY_PKG = "numpy>=2.1"
 

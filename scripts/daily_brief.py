@@ -26,7 +26,9 @@ import json
 from datetime import datetime
 from pathlib import Path
 
-WATCH_ROOT = Path("D:/douyin-distill/_watch")
+from dy_config import WATCH_ROOT
+
+# WATCH_ROOT comes from dy_config (DOUYIN_WATCH_ROOT).
 BATCH_DIR = WATCH_ROOT / "batches"
 BRIEF_DIR = WATCH_ROOT / "brief"
 
@@ -114,7 +116,7 @@ def main() -> int:
     add(f"# 凌晨采集晨报 · {args.date}")
     add("")
     add(f"> 生成时间：{datetime.now():%Y-%m-%d %H:%M} · "
-        f"扫描来源：`D:/douyin-distill/_watch/`")
+        f"扫描来源：`{WATCH_ROOT}`")
     add(f"> 本次采集 {batch.get('requested', 0)} 条，成功 {len(prepared)} 条，"
         f"失败/顺延 {len(failed)} 条，其中 {batch.get('with_transcript', 0)} 条拿到逐字稿。")
     add(f"> 队列现状：待采集 {len(backlog)} 条 · **待蒸馏 {len(awaiting)} 条** · "

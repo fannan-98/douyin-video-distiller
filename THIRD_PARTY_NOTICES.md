@@ -18,6 +18,10 @@
 - `scripts/dy_sign/abogus.py` 文件头保留了上游项目的自述，其中提到「the previous revision of this module was a port of GPL-3.0 code and could not be shipped under this repository's Apache-2.0 licence」——这里的 *this repository* 指**上游仓库**，不是本仓库；上游为此独立重写了该实现，当前版本可随 Apache-2.0 分发。
 - Apache-2.0 要求保留版权声明、许可证副本与修改说明（NOTICE）；MIT 要求保留版权与许可声明。**本仓库未附带上游 LICENSE 全文**，再分发时请从对应项目获取并一并附上。
 
-## 本仓库其余内容
+## 本仓库许可证
 
-除上表列出的文件外，其余内容由本仓库作者编写，**未声明统一许可证**，详见 `README.md` 的「说明与许可」。若需再分发或商用，请先补 `LICENSE` 并确认与上述上游条款兼容。
+除上表列出的第三方文件外，其余内容由本仓库作者编写，按 **Apache-2.0** 授权（见仓库根目录 `LICENSE`）。
+
+    Copyright 2026 fannan-98
+
+选 Apache-2.0 是为了与 `scripts/dy_sign/` 的主要上游（`Evil0ctal/Douyin_TikTok_Download_API`，Apache-2.0）保持一致；MIT 上游的版权与许可声明同样保留在上表中。再分发时请连同本文件一起保留，并注明所做的修改。

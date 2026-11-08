@@ -28,7 +28,7 @@ This script therefore:
     exit code 3 and chapters.md explicitly says "all candidates empty".
 
 Usage:
-    python extract_chapters.py --workdir "D:/douyin-distill/<id>/run6"
+    python extract_chapters.py --workdir "$DOUYIN_DISTILL_ROOT/<id>/run6"
     python extract_chapters.py --detail "<path>/api/detail.json" --workdir "<dir>"
 """
 

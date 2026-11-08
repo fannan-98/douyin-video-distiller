@@ -35,10 +35,10 @@ read_when:
 
 | 项 | 值 |
 | --- | --- |
-| 目标知识库 | 「抖音视频精选」`YOUR_IMA_KB_ID`（用户新建的独立知识库，可写，当前 0 条） |
+| 目标知识库 | 「抖音视频精选」`YOUR_IMA_KB_ID`（= 环境变量 `IMA_KB_ID`，见 `.env.example`；需自行新建独立知识库） |
 | 目标位置 | 该知识库**根目录**；它本身就是专用库，无需再找子文件夹，`add_knowledge` 不传 `folder_id` |
 | 备用知识库 | 「电商」`YOUR_IMA_KB_FALLBACK_ID`，仅当用户明确指定时使用 |
-| 工作目录 | `D:\douyin-distill\<video_id>\`（C 盘长期吃紧，产物一律放 D 盘） |
+| 工作目录 | `DOUYIN_DISTILL_ROOT/<video_id>/`（由 `scripts/dy_config.py` 解析，默认值见 `.env.example`） |
 | 笔记命名 | `【WorkBuddy-YYYY-MM-DD】<video_id>-<slug>.md`，沿用知识库内既有命名习惯 |
 | 上传格式 | Markdown，`content_type=text/markdown`，`file_ext=md` |
 | 章节要点字段 | `aweme_detail.recommend_chapter_info.recommend_chapter_list`（**不是** `chapter_list`） |
@@ -53,7 +53,7 @@ read_when:
 - **「下载并蒸馏」= 走完整链路并把正式蒸馏笔记存入 ima「抖音视频精选」**，不是只把视频文件下到本地。用户此前明确说过「下载并蒸馏理解为蒸馏笔记存进去」。
 - **只贴一条抖音链接、或说「跑抖音精选 <链接> / 蒸馏这条 / 整理一下 / 放进抖音视频精选」即视为触发**；`modal_id` 搜索链接、`/video/<id>`、分享短链、纯数字 id 都能识别，不需要用户先转成规范 URL。
 - **下载只是取得真实文字来源的手段**，交付物是笔记入库。只有用户明确说「只要视频文件 / 不要入库 / 先别存」时，才停在阶段 1C 或阶段 3，不调用 `create_media` / `add_knowledge`。
-- **以下固定项已写死，不要每次重新向用户确认**：知识库 ID `YOUR_IMA_KB_ID`、写根目录不传 `folder_id`、同名用 `DUPLICATE_NAME_STRATEGY_REPLACE`、工作目录 `D:\douyin-distill\<video_id>\`、浏览器 Edge、章节字段 `recommend_chapter_info.recommend_chapter_list`。
+- **以下固定项已写死，不要每次重新向用户确认**：知识库 ID 取 `IMA_KB_ID` 环境变量、写根目录不传 `folder_id`、同名用 `DUPLICATE_NAME_STRATEGY_REPLACE`、工作目录取 `DOUYIN_DISTILL_ROOT`（见 `dy_config.py`）、浏览器 Edge、章节字段 `recommend_chapter_info.recommend_chapter_list`。
 - **例外**：拿不到真实文字来源时按红线输出素材卡并停下，绝不生成正式蒸馏笔记；素材卡只在用户要求时才按阶段 4 作为显式标注「未完成」的占位入库。
 - **位置**：Skill 本体固定放在用户级 `~/.workbuddy/skills/douyin-video-distiller/`（跨所有项目生效）。不要移到项目级 `{workspace}/.workbuddy/skills/`：工作区目录带时间戳，换会话就失效。产物与备份放 D 盘，不放进 Skill 目录。
 - **抖音分享口令可以整段原样粘贴**（含「9.74 复制打开抖音…」「Jvf:/」等噪声）。阶段 0 会自己抽出 URL、展开短链、逐跳校验域名，不需要用户手工转成 `/video/<id>`。

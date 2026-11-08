@@ -37,6 +37,8 @@ import time
 from datetime import datetime
 from pathlib import Path
 
+from dy_config import ASR_ROOT, WATCH_ROOT
+
 SCRIPTS = Path(__file__).resolve().parent
 sys.path.insert(0, str(SCRIPTS))
 
@@ -44,7 +46,7 @@ from watch import (  # noqa: E402
     MAX_ATTEMPTS, QUEUE, classify_error, load,
 )
 
-BATCH_DIR = Path("D:/douyin-distill/_watch/batches")
+BATCH_DIR = WATCH_ROOT / "batches"
 WATCH = SCRIPTS / "watch.py"
 
 
@@ -145,7 +147,7 @@ def main() -> int:
     ap.add_argument("--no-reconcile", action="store_true")
     ap.add_argument("--json-out", default="",
                     help="把结果写成单个 JSON 文档（默认同时写 batches/<日期>.json）")
-    ap.add_argument("--asr-root", default="D:/WorkBuddy-ASR")
+    ap.add_argument("--asr-root", default=str(ASR_ROOT))
     args = ap.parse_args()
 
     repaired = {}

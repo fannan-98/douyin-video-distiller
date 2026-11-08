@@ -23,8 +23,8 @@ read the registry proxy.
 
 Usage:
     python douyin_detail.py <video_id> --download \
-        --out "D:/douyin-distill/<id>/api" \
-        --workdir "D:/douyin-distill/<id>"
+        --out "$DOUYIN_DISTILL_ROOT/<id>/api" \
+        --workdir "$DOUYIN_DISTILL_ROOT/<id>"
 """
 
 from __future__ import annotations

@@ -42,7 +42,6 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import os
 import re
 import shutil
 import subprocess
@@ -50,11 +49,12 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+from dy_config import ASR_ROOT, DISTILL_ROOT, IMA_KB_ID
+
 SKILL_DIR = Path(__file__).resolve().parent
 SCRIPTS = SKILL_DIR
-DISTILL_ROOT = Path("D:/douyin-distill")
-# Set IMA_KB_ID to your own ima knowledge base id before running stages 4/5.
-KB_ID = os.environ.get("IMA_KB_ID", "YOUR_IMA_KB_ID")
+# Stage 4/5 need a real id; doctor.py checks this before you get there.
+KB_ID = IMA_KB_ID or "YOUR_IMA_KB_ID"
 VIDEO_ID_RE = re.compile(r"\d{15,25}")
 
 
@@ -515,7 +515,7 @@ def dir_bytes(path: Path) -> int:
 
 
 def scan_runs(video_id_filter: str) -> list[dict]:
-    """Classify every run<N> dir under D:/douyin-distill."""
+    """Classify every run<N> dir under DISTILL_ROOT."""
     runs: list[dict] = []
     if not DISTILL_ROOT.is_dir():
         return runs
@@ -626,12 +626,12 @@ def main() -> int:
 
     p = sub.add_parser("prepare")
     p.add_argument("raw", help="整段分享口令 / 短链 / URL / 纯 id")
-    p.add_argument("--run-dir", default="", help="default: D:/douyin-distill/<id>/run<N>")
+    p.add_argument("--run-dir", default="", help=f"default: {DISTILL_ROOT}/<id>/run<N>")
     p.add_argument("--no-download", action="store_true",
                    help="reuse existing api/detail.json (offline test)")
     p.add_argument("--use-local-asr", action="store_true",
                    help="transcribe with local sherpa-onnx instead of cloud ASR")
-    p.add_argument("--asr-root", default="D:/WorkBuddy-ASR")
+    p.add_argument("--asr-root", default=str(ASR_ROOT))
     p.add_argument("--transcription-state", default="",
                    choices=["", "done", "declined", "failed", "granted", "skipped"])
     p.add_argument("--reason", default="")

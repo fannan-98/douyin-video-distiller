@@ -11,8 +11,8 @@ single point of failure.
 The backend lives entirely on the D drive so the C drive (4.5 GiB free) is
 never touched:
 
-    D:\\WorkBuddy-ASR\\site\\                  sherpa-onnx + numpy (pip --target)
-    D:\\WorkBuddy-ASR\\models\\sense-voice\\   model.int8.onnx + tokens.txt
+    $WORKBUDDY_ASR_ROOT\\site\\                  sherpa-onnx + numpy (pip --target)
+    $WORKBUDDY_ASR_ROOT\\models\\sense-voice\\   model.int8.onnx + tokens.txt
 
 Output is a Skill-compatible transcript: `[m:ss.mmm,m:ss.mmm] text` lines that
 `resolve_transcript.looks_like_transcript` accepts, so `transcription_gate.py
@@ -37,11 +37,13 @@ import wave
 from datetime import datetime
 from pathlib import Path
 
+from dy_config import ASR_ROOT
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from dy_http import merge_status  # noqa: E402
 from resolve_transcript import looks_like_transcript  # noqa: E402
 
-DEFAULT_ROOT = Path("D:/WorkBuddy-ASR")
+DEFAULT_ROOT = ASR_ROOT
 SAMPLE_RATE = 16000
 FRAME = 320                  # 20 ms
 MAX_SEGMENT_S = 25.0

@@ -9,7 +9,7 @@ don't know the authors yet, you only know the topic.  That needs search, and
 Douyin's search API is closed to guests (see SKILL.md §三·补 "关键词搜索").
 
 The vendored `zhubaohe123/Douyin-api` (MIT, at
-`D:/douyin-distill/_vendor/douyin-api`) drives a real Chromium that intercepts
+`DOUYIN_VENDOR_DIR`) drives a real Chromium that intercepts
 the official search XHR — it only needs a one-time QR login into a *fresh*
 profile (never reads your Edge cookie; see SKILL.md red line #15).  This script
 is the thin bridge: run the search → normalise → hand the list to
@@ -25,7 +25,7 @@ native "30 days".  We pull `publish_time=180` (broad) with `sort_type=2`
 Usage
 -----
     # first time only: QR login into the tool's own profile
-    cd D:/douyin-distill/_vendor/douyin-api
+    cd $DOUYIN_VENDOR_DIR
     ../.venv/Scripts/python.exe login.py
 
     # discovery (reuses cookies.txt from the login above)
@@ -45,17 +45,26 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-# --- locate the vendored search engine -------------------------------------
-VENDOR_DIR = Path(r"D:/douyin-distill/_vendor/douyin-api")
-if not VENDOR_DIR.is_dir():
-    raise SystemExit(f"找不到 vendored 搜索引擎目录: {VENDOR_DIR}")
-sys.path.insert(0, str(VENDOR_DIR))
-
-# `DouyinSearcher` only needs playwright, which lives in the vendored venv.
-from douyin_searcher import DouyinSearcher  # noqa: E402
+from dy_config import VENDOR_DIR, WATCH_ROOT
 
 WATCH_PY = Path(__file__).resolve().parent / "watch.py"
-WATCH_ROOT = Path(r"D:/douyin-distill/_watch")
+
+
+def _load_searcher():
+    """Import the OPTIONAL vendored engine only when keyword search runs.
+
+    A fresh clone can import this module and run doctor.py without installing
+    zhubaohe123/Douyin-api first.
+    """
+    if not VENDOR_DIR.is_dir():
+        raise SystemExit(
+            f"找不到 vendored 搜索引擎目录: {VENDOR_DIR}\n"
+            "关键词发现是可选能力：请设置 DOUYIN_VENDOR_DIR 指向 "
+            "zhubaohe123/Douyin-api 的本地副本，或直接用主链路（贴链接蒸馏）。"
+        )
+    sys.path.insert(0, str(VENDOR_DIR))
+    from douyin_searcher import DouyinSearcher
+    return DouyinSearcher
 
 
 def normalize(video: dict) -> dict:
@@ -77,7 +86,7 @@ def normalize(video: dict) -> dict:
 async def run_search(keyword: str, since_days: int, publish_time: int,
                      sort_type: int, pages: int, headless: bool,
                      human_wait: int = 180) -> list[dict]:
-    searcher = DouyinSearcher(headless=headless)
+    searcher = _load_searcher()(headless=headless)
     # Keep cookies + intercepted JSON in the vendor dir, consistent with login_auto.py
     searcher.cookie_file = str(VENDOR_DIR / "cookies.txt")
     collected: list[dict] = []
@@ -96,7 +105,7 @@ async def run_search(keyword: str, since_days: int, publish_time: int,
                 if code == "CAPTCHA_REQUIRED":
                     print("   若出现滑块验证：请在弹出的浏览器中手动完成，脚本会等待；"
                           "若超时，可重跑本命令。cookie 失效则重登录：", file=sys.stderr)
-                    print("   cd D:/douyin-distill/_vendor/douyin-api "
+                    print(f"   cd {VENDOR_DIR} "
                           "&& .venv/Scripts/python.exe login_auto.py", file=sys.stderr)
                 break
             videos = (result.get("data") or {}).get("videos") or []

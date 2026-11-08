@@ -25,6 +25,7 @@ session.json
 session_*.json
 .env
 *.env
+!.env.example
 *secret*.json
 
 # 媒体与模型文件（体积大，且不属于源码）

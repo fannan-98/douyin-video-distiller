@@ -15,6 +15,8 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+from dy_config import DISTILL_ROOT
+
 VIDEO_ID_RE = re.compile(r"\d{15,25}")
 MEDIA_EXTS = {".mp4", ".mov", ".mkv", ".webm", ".flv", ".mp3", ".m4a",
               ".wav", ".aac", ".ogg", ".flac", ".3gp", ".wma"}
@@ -93,7 +95,7 @@ def main():
     parser.add_argument("--local-file", default="", help="already saved local media file")
     parser.add_argument("--cookies", default="", help="Netscape cookie file for yt-dlp")
     parser.add_argument("--cookies-from-browser", default="",
-                        help='e.g. "edge:D:/douyin-distill/edge-profile"')
+                        help='e.g. "edge:$DOUYIN_DISTILL_ROOT/edge-profile"')
     parser.add_argument("--format", default="best[height<=720]/best",
                         help="yt-dlp format selector")
     parser.add_argument("--timeout", type=int, default=180)
@@ -125,7 +127,7 @@ def main():
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 2
 
-    workdir = Path(args.workdir) if args.workdir else Path("D:/douyin-distill") / video_id
+    workdir = Path(args.workdir) if args.workdir else DISTILL_ROOT / video_id
     workdir.mkdir(parents=True, exist_ok=True)
     result["workdir"] = str(workdir)
 
